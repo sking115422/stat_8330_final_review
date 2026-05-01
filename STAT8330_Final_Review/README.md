@@ -1,6 +1,6 @@
 # STAT 8330 Final Review Python Notebook Library
 
-This folder is a Python-only, self-contained notebook library for STAT 8330 final review. The shared `00_utilities/` folder has been removed intentionally: each notebook now includes its own simulation helpers, evaluation code, assumptions, Python documentation links, plots/tables, and exam-style adaptation pattern.
+This folder is a Python-only, self-contained notebook library for STAT 8330 final review. The previous shared utilities folder has been removed intentionally: each notebook now includes its own simulation helpers, evaluation code, assumptions, Python documentation links, plots/tables, and exam-style adaptation pattern.
 
 The design goal is timed-exam reuse: open the notebook for the method you need and copy the complete local workflow without flipping between files.
 
