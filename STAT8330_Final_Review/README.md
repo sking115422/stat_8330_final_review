@@ -15,11 +15,13 @@ The design goal is timed-exam reuse: open the notebook for the method you need a
 
 ```text
 STAT8330_Final_Review/
-├── 00_quick_start_exam_workflows.ipynb
+├── exam_workflows.ipynb
 ├── 01_regression_prediction/
 ├── 02_classification/
 ├── 03_unsupervised_learning/
-├── 04_bootstrap_permutation_methods.ipynb
+├── bootstrap_permutation_methods.ipynb
+├── bootstrap_permutation_methods_notes.md
+├── old_exam_solutions/
 ├── README.md
 └── requirements.txt
 ```
@@ -28,11 +30,19 @@ There is no local utility module to import. Every notebook is standalone.
 
 ## Suggested Study Order
 
-1. `00_quick_start_exam_workflows.ipynb`
-2. Regression train/test, CV, polynomial regression, splines, kernel smoothers, LOESS, lasso, and bootstrap CI notebooks
-3. Classification metrics, LDA/QDA, KNN, trees/pruning, ensembles, SVM, simulation comparisons, and randomized max-margin notebook
-4. `04_bootstrap_permutation_methods.ipynb`
+1. `exam_workflows.ipynb`
+2. `01_regression_prediction/NOTES.md`, then regression train/test, CV, polynomial regression, splines, kernel smoothers, LOESS, lasso, and bootstrap CI notebooks
+3. `02_classification/NOTES.md`, then classification metrics, LDA/QDA, KNN, trees/pruning, ensembles, SVM, simulation comparisons, and randomized max-margin notebook
+4. `bootstrap_permutation_methods_notes.md`, then `bootstrap_permutation_methods.ipynb`
 5. PCA, k-means, hierarchical clustering, and unsupervised simulation notebooks
+6. `old_exam_solutions/` for complete Fall 2022 and Fall 2023 old-final solutions
+
+## Notes Files
+
+- `01_regression_prediction/NOTES.md`: quick-reference notes for numeric prediction, MSE/RMSE, train/test evaluation, CV/LOOCV, linear and polynomial regression, splines, kernel smoothers, LOESS, lasso, and bootstrap regression intervals.
+- `02_classification/NOTES.md`: quick-reference notes for classification metrics, LDA/QDA, KNN, trees, pruning, random forest, AdaBoost, SVM, max-margin classifiers, and simulation studies.
+- `03_unsupervised_learning/NOTES.md`: quick-reference notes for PCA, k-means, hierarchical clustering, standardization, dendrograms, elbow plots, and unsupervised simulation examples.
+- `bootstrap_permutation_methods_notes.md`: quick-reference notes for bootstrap confidence intervals, bootstrap standard errors, row/residual regression bootstrap, permutation tests, exchangeability, and p-value interpretation.
 
 ## Exam Workflow Checklist
 
