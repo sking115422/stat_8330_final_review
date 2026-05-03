@@ -1,0 +1,251 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\lhead{STAT 8330 Practice Final Exam}
+\rhead{Page \thepage\ of \pageref{LastPage}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist[enumerate]{leftmargin=*, itemsep=1.15em}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Statistics 8330 Practice Final Exam}}\\[0.35em]
+    {\large Python/R Computational Statistics Review}\\[0.35em]
+    \textbf{Practice Version}
+\end{center}
+
+In order to receive full credit, your code must include comments that explain what you are doing.
+You may use R or Python for all problems. Use simulated data unless a problem explicitly says otherwise.
+There will be partial credit for successfully completing portions of problems, even if you do not complete everything.
+Each problem is worth equal points.
+
+This is a practice exam designed to resemble prior STAT 8330 final exams. Before using any notes, code, or AI-created materials during an actual exam, confirm the current course rules.
+
+\bigskip
+
+\begin{enumerate}
+
+\item \textbf{Regression model assessment, smoothing, and cross-validation.}
+
+In this problem, you will write a function to compare several numeric prediction methods on a one-predictor nonlinear regression problem.
+
+First, simulate a data set with one predictor and one numeric response. Your simulation should have a smooth nonlinear mean function, such as
+\[
+Y = 2 + \sin(3X) + \epsilon,
+\]
+where \(X\) is generated from a continuous distribution and \(\epsilon\) is random noise. Use a fixed random seed.
+
+Write a function of the form
+
+\begin{lstlisting}
+compare_regression_methods(dat, degree_vec, spline_df_vec, span_vec, k=5, makePlot=True)
+\end{lstlisting}
+
+where:
+
+\begin{itemize}
+    \item \texttt{dat} is a data frame whose first column is the predictor and whose second column is the response,
+    \item \texttt{degree\_vec} is a vector of polynomial degrees to test,
+    \item \texttt{spline\_df\_vec} or an equivalent argument gives the spline complexities to test,
+    \item \texttt{span\_vec} gives LOESS/LOWESS span values to test,
+    \item \texttt{k} is the number of folds for k-fold cross-validation,
+    \item \texttt{makePlot} determines whether the function makes a plot.
+\end{itemize}
+
+Your function should do the following:
+
+\begin{enumerate}[label=(\alph*)]
+    \item use k-fold cross-validation to estimate prediction MSE for each candidate method and tuning value;
+    \item compare polynomial regression, spline regression, and LOESS/LOWESS or another local smoother;
+    \item return a table with method name, tuning value, and mean cross-validation MSE;
+    \item identify the method and tuning value with the lowest cross-validation MSE;
+    \item if \texttt{makePlot=TRUE}, plot the simulated data and overlay the fitted curve from the selected method.
+\end{enumerate}
+
+Demonstrate your function on simulated data. Briefly explain which method was selected and what the tuning parameter means. Your explanation should mention the bias-variance tradeoff and why cross-validation is being used instead of training MSE.
+
+\newpage
+
+\item \textbf{Lasso penalty simulation study.}
+
+In this problem, you will conduct a simulation study of how lasso prediction error depends on the penalty parameter.
+
+Create at least three simulation scenarios. Your scenarios should be chosen so that different penalty strengths might be favored. For example, you might vary:
+
+\begin{itemize}
+    \item sparse signal versus dense signal,
+    \item low noise versus high noise,
+    \item small sample size versus larger sample size,
+    \item many irrelevant predictors versus few irrelevant predictors.
+\end{itemize}
+
+Write code that does the following:
+
+\begin{enumerate}[label=(\alph*)]
+    \item simulates training and test data for each scenario;
+    \item fits lasso regression over a grid of penalty values;
+    \item standardizes predictors before fitting the lasso;
+    \item computes prediction error on test data for every replicate and penalty value;
+    \item repeats the process over many simulation replicates;
+    \item produces a plot of mean test MSE versus penalty value for each scenario.
+\end{enumerate}
+
+Your output should include:
+
+\begin{itemize}
+    \item a short table giving the best penalty value in each scenario,
+    \item at least one plot showing prediction error as a function of the lasso penalty,
+    \item a brief written explanation of why larger or smaller penalties were favored in your scenarios.
+\end{itemize}
+
+Your explanation should discuss what the lasso penalty does to coefficients, why standardization matters, and how the results illustrate the bias-variance tradeoff.
+
+\newpage
+
+\item \textbf{Classification simulation, metrics, and tuning.}
+
+In this problem, you will compare classification methods using simulated data.
+
+Simulate at least two binary classification scenarios:
+
+\begin{itemize}
+    \item one scenario where a linear boundary should work reasonably well;
+    \item one scenario where the true boundary is nonlinear.
+\end{itemize}
+
+Write a function of the form
+
+\begin{lstlisting}
+classification_study(scenario, nrep, train_size, test_size, makePlot=True)
+\end{lstlisting}
+
+or a similar function with clearly documented arguments.
+
+Your function should compare at least four of the following methods:
+
+\begin{itemize}
+    \item logistic regression,
+    \item LDA,
+    \item QDA,
+    \item K-nearest neighbors,
+    \item decision tree with pruning or depth control,
+    \item random forest,
+    \item AdaBoost,
+    \item support vector machine.
+\end{itemize}
+
+Your study should do the following:
+
+\begin{enumerate}[label=(\alph*)]
+    \item fit each classifier on training data only;
+    \item compute test accuracy for each replicate;
+    \item for at least one method, tune a parameter by cross-validation inside the training data, such as KNN's \(k\), tree pruning parameter, or SVM's \(C\) and \(\gamma\);
+    \item report a table of mean test accuracy by method and scenario;
+    \item report a confusion matrix for the best method in one replicate;
+    \item make a plot such as a boxplot of test accuracies by method.
+\end{enumerate}
+
+Briefly explain your results. Your explanation should mention which methods are expected to work better for linear versus nonlinear class boundaries, why stratified splitting or stratified cross-validation is useful, and why training accuracy alone is not sufficient.
+
+\newpage
+
+\item \textbf{Bootstrap confidence intervals and permutation tests.}
+
+In this problem, you will write two simulation-based inference functions.
+
+\textbf{Part A. Bootstrap confidence interval.}
+
+Write a function of the form
+
+\begin{lstlisting}
+bootstrap_ci(data, statistic_function, n_boot=2000, confidence=0.95)
+\end{lstlisting}
+
+that returns a percentile bootstrap confidence interval for a statistic. Demonstrate the function on at least one of the following:
+
+\begin{itemize}
+    \item a confidence interval for a mean,
+    \item a confidence interval for a median,
+    \item a confidence interval for a regression slope by resampling rows.
+\end{itemize}
+
+Your output should include the point estimate, lower endpoint, upper endpoint, and a plot of the bootstrap distribution.
+
+\textbf{Part B. Permutation test.}
+
+Write a function of the form
+
+\begin{lstlisting}
+permutation_test_two_groups(group1, group2, statistic_function, n_perm=5000, alternative="two-sided")
+\end{lstlisting}
+
+that performs a permutation test comparing two groups. Demonstrate your function on simulated two-group data.
+
+Your permutation-test output should include:
+
+\begin{itemize}
+    \item the observed statistic,
+    \item the simulated p-value,
+    \item a plot of the permutation null distribution with the observed statistic marked.
+\end{itemize}
+
+Briefly explain the difference between bootstrap resampling and permutation testing. Your explanation should clearly state what exchangeability means and when a permutation test is appropriate.
+
+\newpage
+
+\item \textbf{Unsupervised learning: PCA, k-means, and hierarchical clustering.}
+
+In this problem, you will perform an unsupervised learning analysis using simulated multivariate data.
+
+Simulate a data set with several numeric variables and an underlying cluster structure. You may keep the true cluster labels for checking recovery, but your unsupervised methods should not use the labels when fitting.
+
+Your analysis should include the following:
+
+\begin{enumerate}[label=(\alph*)]
+    \item standardize the predictor variables;
+    \item run PCA and report the proportion of variance explained by the first few principal components;
+    \item make a scree plot;
+    \item make a two-dimensional PCA score plot;
+    \item run k-means clustering for several values of \(k\);
+    \item make an elbow plot or use another reasonable diagnostic for choosing \(k\);
+    \item run hierarchical clustering and display a dendrogram;
+    \item compare the k-means and hierarchical clustering results qualitatively.
+\end{enumerate}
+
+If you simulated true cluster labels, compute a recovery measure such as an adjusted Rand index or a cross-tabulation of true labels and recovered clusters.
+
+Briefly explain:
+
+\begin{itemize}
+    \item why variables should usually be standardized before PCA or clustering;
+    \item the difference between PCA and clustering;
+    \item why unsupervised learning results should be interpreted cautiously;
+    \item how cluster overlap or non-spherical clusters could cause k-means to fail.
+\end{itemize}
+
+\end{enumerate}
+
+\end{document}
